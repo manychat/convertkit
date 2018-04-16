@@ -5,16 +5,9 @@ namespace ConvertKit;
 
 class Sequence extends ConvertKit {
 
-    public $url_base;
-    public $api_key;
-    public $api_secret_key;
-    public $request_url;
-    public $id;
-
     function __construct($url_base, $api_key, $api_secret_key) {
-        $this->url_base = $url_base;
-        $this->api_key = $api_key;
-        $this->api_secret_key = $api_secret_key;
+        parent::__construct($api_key, $api_secret_key);
+        $this->url_base    = $url_base;
         $this->request_url = "{$this->url_base}/sequences";
     }
 
@@ -24,15 +17,19 @@ class Sequence extends ConvertKit {
     }
 
     function showall() {
-        $request_url = $this->request_url . '?api_key='.$this->api_key;
-        $response = $this->curl($request_url);
+        $request_url = $this->request_url . '?' . http_build_query($this->getSimpleTokenParam());
+        $response    = $this->curl($request_url);
+
         return $response;
     }
 
     public function listSubscriptions($id = null) {
-        if( $id ) $this->setSequenceId($id);
-        $request_url = $this->request_url . '/'.$this->id.'/subscriptions?api_secret='.$this->api_secret_key;
-        $response = $this->curl($request_url);
+        if ($id) {
+            $this->setSequenceId($id);
+        }
+        $request_url = $this->request_url . '/' . $this->id . '/subscriptions' . '?' . http_build_query($this->getSecretTokenParam());
+        $response    = $this->curl($request_url);
+
         return $response;
     }
 }
