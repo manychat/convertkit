@@ -1,5 +1,5 @@
 {
-    "name": "surefirejack/convertkit",
+    "name": "manychat/convertkit",
     "type": "library",
     "description": "ConvertKit SDK",
     "keywords": ["convertkit", "ConvertKit"],

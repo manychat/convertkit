@@ -88,6 +88,10 @@ class ConvertKit extends Connector {
         return $class;
     }
 
+    public function account() {
+        return new Account($this->base_url, $this->api_key, $this->api_secret_key);
+    }
+
 }
 
 
